@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Ignore Car js object used to test
+cars.js
+images/
