@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container } from 'react-bootstrap'
+
+import Header from './Components/Header/Header'
+import Footer from './Components/Footer/Footer'
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-       
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header/>
+       <main className="py-3">
+        <Container>
+          <h1>
+            Welcome to Downtown Autoplex!
+          </h1>
+        </Container>
+       </main>
+      <Footer />
     </div>
   );
 }
