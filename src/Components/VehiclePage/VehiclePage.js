@@ -1,37 +1,49 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from 'axios'
+
 import { Link, useParams } from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Button, Card} from 'react-bootstrap'
-import cars from '..//../cars'
 
 
 const VehiclePage = () => {
-    const { _id } = useParams();
+    const { id } = useParams();
+
+    const [vehicle, setVehicle] = useState([])
     // eslint-disable-next-line eqeqeq
-    const car = cars.find((p) => p._id === _id)
+    
+    useEffect(() => {
+        async function getVehicle(){
+            //const car = cars.find((p) => p.id === id)
+            const { data }  = await axios.get(`/api/vehicles/${id}`)     
+            setVehicle(data)
+            
+        }
+        getVehicle();   
+    }, [id])
     
     return (
         <div>
             <Link to='/' className='btn btn-light my-3'>Go Back</Link>
             <Row>
                 <Col md={6}>
-                   <Image src ={car.image} alt={car.name} fluid />
+                   <Image src ={vehicle.main_image} alt={vehicle.make} fluid />
                 </Col>
                 <Col md={3}>
                     <ListGroup variant="Flush">
                         <ListGroup.Item>
-                             <h3> {car.name} </h3>
+                             <h3> {vehicle.model} </h3>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h3> {car.description} </h3>
+                            <h3> {vehicle.vehicle_type} </h3>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h3> {car.categoty} </h3>
+                            <h3> {vehicle.categoty} </h3>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h1> Price: <strong>${car.price}</strong> </h1>
+                            <h1> Price: <strong>${vehicle.price}</strong> </h1>
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
@@ -40,21 +52,21 @@ const VehiclePage = () => {
                     <ListGroup variant="Flush">
                         <ListGroup.Item>
                             <Row>
-                                <Col>  <h1> Price: <strong>${car.price}</strong> </h1></Col>
+                                <Col>  <h1> Price: <strong>${vehicle.price}</strong> </h1></Col>
                             </Row>
                         </ListGroup.Item>
                     </ListGroup>
                     <ListGroup variant="Flush">
                         <ListGroup.Item>
                             <Row>
-                                <Col><h1> Status: {car.countInStock > 0 ?'Available' : 'Not Available'} </h1></Col>
+                                <Col><h1> Status: {vehicle.countInStock > 0 ?'Available' : 'Not Available'} </h1></Col>
                             </Row>
                         </ListGroup.Item>
                     </ListGroup>
 
                     <ListGroup variant="Flush"> 
                         <ListGroup.Item>
-                            <button type='button' className btn btn-danger disabled={car.countInStock === 0}>Buy Car</button>
+                            <Button type='button' className btn btn-danger disabled={vehicle.countInStock === 0}>Buy Car</Button>
                         </ListGroup.Item>
                     </ListGroup>
 
