@@ -3,6 +3,7 @@ import {Col, Row} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Car from '../Car/Car'
 import Loader from '../Loader/Loader'
+import Message from '../Loader/Message'
 import { listVehicles } from '../../Actions/VehicleActions'
 
 
@@ -24,7 +25,7 @@ function HomeScreen () {
 
             {
                 loading ? <Loader />
-                : error ? <h3>{error}</h3>
+                : error ? <Message variant='danger'>{error}</Message>
                 :
                     <Row>
                         {vehicles.map(vehicle => (

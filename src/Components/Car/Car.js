@@ -21,7 +21,7 @@ function Car({vehicle}) {
                 </Link>
                    
                 <Card.Text as="h3">
-                    ${vehicle.main_image}
+                    ${vehicle.type}
                 </Card.Text> 
             </Card.Body>
         </Card>
