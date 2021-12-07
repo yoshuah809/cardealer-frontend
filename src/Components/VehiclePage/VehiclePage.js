@@ -31,15 +31,17 @@ const VehiclePage = () => {
                 <Col md={3}>
                     <ListGroup variant="Flush">
                         <ListGroup.Item>
-                             <h3> {vehicle.model} </h3>
-                        </ListGroup.Item>
-
-                        <ListGroup.Item>
+                            <h3> Make:  {vehicle.model} </h3>
+                            <h3> Model: {vehicle.model} </h3>
+                            <h3> Miles: {vehicle.miles} </h3>
                             <h3> {vehicle.vehicle_type} </h3>
+                            <h6> VIN: {vehicle.VIN} </h6>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <h3> {vehicle.categoty} </h3>
+                        </ListGroup.Item>
+
+                        <ListGroup.Item>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
@@ -59,14 +61,14 @@ const VehiclePage = () => {
                     <ListGroup variant="Flush">
                         <ListGroup.Item>
                             <Row>
-                                <Col><h1> Status: {vehicle.countInStock > 0 ?'Available' : 'Not Available'} </h1></Col>
+                                <Col><h1> Status: {!vehicle.isSold ?'Available' : 'Not Available'} </h1></Col>
                             </Row>
                         </ListGroup.Item>
                     </ListGroup>
 
                     <ListGroup variant="Flush"> 
                         <ListGroup.Item>
-                            <Button type='button' className btn btn-danger disabled={vehicle.countInStock === 0}>Buy Car</Button>
+                            <Button type='button' className btn btn-danger disabled={vehicle.isSold}>Buy Car</Button>
                         </ListGroup.Item>
                     </ListGroup>
 
