@@ -2,14 +2,17 @@ import { useDispatch } from 'react-redux'
 
 import  { VEHICLE_LIST_REQUEST,
     VEHICLE_LIST_SUCCESS,
-    VEHICLE_LIST_FAIL } from '../Constants/VehicleConstants'
+    VEHICLE_LIST_FAIL,
+    VEHICLE_DETAILS_REQUEST,
+    VEHICLE_DETAILS_SUCCESS,
+    VEHICLE_DETAILS_FAIL } from '../Constants/VehicleConstants'
 
 import axios from 'axios'
 
 
 export const listVehicles= () => async (dispatch) => {
    try {
-       dispatch( {type:VEHICLE_LIST_REQUEST} )
+       dispatch({ type:VEHICLE_LIST_REQUEST })
        const { data }  = await axios.get('/api/vehicles/')   
 
        dispatch( {
@@ -27,4 +30,24 @@ export const listVehicles= () => async (dispatch) => {
    }
 }
 
+
+export const listVehicleDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: VEHICLE_DETAILS_REQUEST })
+        const { data }  = await axios.get(`/api/vehicles/${id}`)   
+ 
+        dispatch( {
+            type:VEHICLE_DETAILS_SUCCESS,
+             payload: data
+         })
+ 
+    } catch (error) {
+     dispatch( {
+         type:VEHICLE_DETAILS_FAIL,
+         payload: error.response && error.response.data.message
+         ? error.response.data.message
+         : error.message
+      })
+    }
+ }
 
