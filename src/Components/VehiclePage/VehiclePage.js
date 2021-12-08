@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { listVehicleDetails } from '../../Actions/VehicleActions'
 import Loader from '../Loader/Loader'
 import Message from '../Loader/Message'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Button, Card} from 'react-bootstrap'
 
 const VehiclePage = () => {
     let { id }  = useParams();
+    const navigate  = useNavigate();
 
     const dispatch = useDispatch()
     const vehicleDetails = useSelector(state => state.vehicleDetails)
@@ -16,9 +17,12 @@ const VehiclePage = () => {
   
     useEffect(() => {
           dispatch(listVehicleDetails(id))
-    }, []);
+    }, [dispatch, id]);
     
- 
+    const addtoCartHandler=()=>{
+        navigate(`/cart/${id}?quantity=${1}`)
+    }
+
     return (
         <div>
             <Link to='/' className='btn btn-light my-3'>Go Back</Link>
@@ -33,22 +37,16 @@ const VehiclePage = () => {
 
                         <Row>
                             <Col md={6}>
-                            <Image src ={vehicle.main_image} alt={vehicle.make} fluid />
+                            <Image src ={vehicle.main_image, vehicle.image1 } alt={vehicle.make} fluid />
                             </Col>
                             <Col md={3}>
                                 <ListGroup variant="Flush">
                                     <ListGroup.Item>
-                                        <h3> Make:  {vehicle.model} </h3>
+                                        <h3> Make:  {vehicle.make} </h3>
                                         <h3> Model: {vehicle.model} </h3>
                                         <h3> Miles: {vehicle.miles} </h3>
                                         <h3> {vehicle.vehicle_type} </h3>
                                         <h6> VIN: {vehicle.VIN} </h6>
-                                    </ListGroup.Item>
-
-                                    <ListGroup.Item>
-                                    </ListGroup.Item>
-
-                                    <ListGroup.Item>
                                     </ListGroup.Item>
 
                                     <ListGroup.Item>
@@ -75,7 +73,9 @@ const VehiclePage = () => {
 
                                 <ListGroup variant="Flush"> 
                                     <ListGroup.Item>
-                                        <Button type='button' className btn btn-danger disabled={vehicle.isSold}>Buy Car</Button>
+                                        <Button type='button' 
+                                        onClick={addtoCartHandler}
+                                        className btn btn-danger disabled={vehicle.isSold}>Buy Car</Button>
                                     </ListGroup.Item>
                                 </ListGroup>
 

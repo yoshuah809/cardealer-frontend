@@ -10,7 +10,7 @@ import  { VEHICLE_LIST_REQUEST,
 import axios from 'axios'
 
 
-export const listVehicles= () => async (dispatch) => {
+export const listVehicles = () => async (dispatch) => {
    try {
        dispatch({ type:VEHICLE_LIST_REQUEST })
        const { data }  = await axios.get('/api/vehicles/')   
