@@ -1,5 +1,5 @@
 import { Container } from 'react-bootstrap'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 import Header from './Components/Header/Header'
 import Footer from './Components/Footer/Footer'
 
@@ -11,20 +11,17 @@ import CartPage from './Components/CartPage/CartPage';
 function App() {
   return (
 
-    <BrowserRouter>
+    <Router>
       <Header/>
        <main className="py-3">
        <Container>
-          <Routes>
-            <Route path="/" element={<HomeScreen />} />
-            <Route path="/car:id" element={<VehiclePage />} />  
-            <Route path="/Cart:id?" element={<CartPage />} />  
-          </Routes>
+            <Route path='/' component={HomeScreen} exact/>
+            <Route path='/car:id' component={VehiclePage} />  
+            <Route path='/cart:id?' component={CartPage} />  
        </Container>
-
        </main>
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
 

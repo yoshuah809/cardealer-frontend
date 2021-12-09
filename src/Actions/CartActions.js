@@ -1,9 +1,11 @@
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
 
 import  { CART_ADD_ITEM } from '../Constants/CartConstants'
 
-export const addToCart = () => async (dispatch, getState){
-    const { data } = await axios.get(`/api/vehicle/{id}`)
+export const AddToCart = (id) => async (dispatch, getState) => {
+    const { data } = await axios.get(`/api/vehicles/${id}`)
+    console.log(data.id)
 
     dispatch({
         type: CART_ADD_ITEM,
@@ -18,8 +20,7 @@ export const addToCart = () => async (dispatch, getState){
             doors: data.number_of_doors,
             transmission: data.transmission_type,
             price: data.price,
-
-
+            quantity: 1,
         }
     })
 

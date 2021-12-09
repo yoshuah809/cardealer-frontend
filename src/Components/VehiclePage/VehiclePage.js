@@ -3,12 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { listVehicleDetails } from '../../Actions/VehicleActions'
 import Loader from '../Loader/Loader'
 import Message from '../Loader/Message'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {Row, Col, Image, ListGroup, Button, Card} from 'react-bootstrap'
 
-const VehiclePage = () => {
-    let { id }  = useParams();
-    const navigate  = useNavigate();
+const VehiclePage = ({ match, history}) => {
 
     const dispatch = useDispatch()
     const vehicleDetails = useSelector(state => state.vehicleDetails)
@@ -16,11 +14,11 @@ const VehiclePage = () => {
 
   
     useEffect(() => {
-          dispatch(listVehicleDetails(id))
-    }, [dispatch, id]);
+          dispatch(listVehicleDetails(match.params.id))
+    }, [dispatch, match.params.id]);
     
-    const addtoCartHandler=()=>{
-        navigate(`/cart/${id}?quantity=${1}`)
+    const addtoCartHandler = () =>{
+        history.push(`/cart${match.params.id}`)
     }
 
     return (
@@ -37,7 +35,7 @@ const VehiclePage = () => {
 
                         <Row>
                             <Col md={6}>
-                            <Image src ={vehicle.main_image, vehicle.image1 } alt={vehicle.make} fluid />
+                            <Image src ={vehicle.main_image } alt={vehicle.make} fluid />
                             </Col>
                             <Col md={3}>
                                 <ListGroup variant="Flush">

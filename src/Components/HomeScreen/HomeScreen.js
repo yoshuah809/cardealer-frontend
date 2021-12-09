@@ -8,17 +8,18 @@ import { listVehicles } from '../../Actions/VehicleActions'
 
 
 
-function HomeScreen () {
+function HomeScreen ({ history }) {
    
     const dispatch = useDispatch()
     const vehicleList = useSelector(state => state.vehicleList)
-    const {error, loading, vehicles} = vehicleList
+    const { error, loading, vehicles } = vehicleList
+
+    let keyword = history.location.search
 
     useEffect(() => {
-        dispatch(listVehicles())        
-    }, [dispatch])
+        dispatch(listVehicles(keyword))        
+    }, [dispatch, keyword])
 
-    //const vehicles=[];
     return (
         <div>
             <h1>Laterst Cars</h1>

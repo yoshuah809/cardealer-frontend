@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { vehicleListReducer, vehicleDetailsReducer } from './Components/reducers/VehicleReducer'
-import { CartReducer } from './Components/reducers/CartReducer'
+import { vehicleListReducer, vehicleDetailsReducer } from '../Components/reducers/VehicleReducer'
+import { CartReducer } from '../Components/reducers/CartReducer'
 
 const reducer = combineReducers({
     vehicleList: vehicleListReducer,
