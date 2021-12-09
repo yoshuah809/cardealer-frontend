@@ -3,7 +3,8 @@ import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import  Message  from '../Loader/Message'
-import { AddToCart } from '../../Actions/CartActions'
+import { AddToCart, removeFromCart } from '../../Actions/CartActions'
+
 
 
 function CartPage({ match, history}) {
@@ -21,8 +22,8 @@ function CartPage({ match, history}) {
         }
     }, [dispatch, vehicleId])
 
-    const removeFromCartHandler = (vehicleId) => {
-        //dispatch(removeFromCart(id))
+    const removeFromCartHandler = (id) => {
+        dispatch(removeFromCart(id))
     }
 
     const checkoutHandler = () => {
@@ -40,10 +41,10 @@ function CartPage({ match, history}) {
                 ) : (
                         <ListGroup variant='flush'>
                             {cartItems.map(item => (
-                                <ListGroup.Item key={item.product}>
+                                <ListGroup.Item key={item.vehicle}>
                                     <Row>
                                         <Col md={2}>
-                                            <Image src={item.image} alt={item.name} fluid rounded />
+                                            <Image src={item.main_image} alt={item.make} fluid rounded />
                                         </Col>
                                         <Col md={3}>
                                             <Link to={`/vehicle/${item.vehicle}`}>{item.make} {item.model} {item.mfr} {item.VIN} {item.color}</Link>
@@ -53,20 +54,12 @@ function CartPage({ match, history}) {
                                             ${item.price}
                                         </Col>
 
-                                        <Col md={3}>
-                                            <Form.Control
-                                                as="select"
-                                                value={item.qty}
-                                                onChange={(e) => dispatch(AddToCart(item.vehicle))}
-                                            >                                               
-                                            </Form.Control>
-                                        </Col>
-
+                                        
                                         <Col md={1}>
                                             <Button
                                                 type='button'
                                                 variant='light'
-                                                onClick={() => removeFromCartHandler(item.product)}
+                                                onClick={() => removeFromCartHandler(item.vehicle)}
                                             >
                                                 <i className='fas fa-trash'></i>
                                             </Button>
@@ -82,8 +75,8 @@ function CartPage({ match, history}) {
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h2>
-                            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                            <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.quantity, 0)}) items</h2>
+                            ${cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)}
                         </ListGroup.Item>
                     </ListGroup>
 

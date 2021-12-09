@@ -45,6 +45,7 @@ const VehiclePage = ({ match, history}) => {
                                         <h3> Miles: {vehicle.miles} </h3>
                                         <h3> {vehicle.vehicle_type} </h3>
                                         <h6> VIN: {vehicle.VIN} </h6>
+                                        <h6> Color: {vehicle.color} </h6>
                                     </ListGroup.Item>
 
                                     <ListGroup.Item>
@@ -57,7 +58,7 @@ const VehiclePage = ({ match, history}) => {
                                 <ListGroup variant="Flush">
                                     <ListGroup.Item>
                                         <Row>
-                                            <Col>  <h1> Price: <strong>${vehicle.price}</strong> </h1></Col>
+                                            <Col> <h1>  <strong> Price: ${vehicle.price}</strong> </h1></Col>
                                         </Row>
                                     </ListGroup.Item>
                                 </ListGroup>
@@ -73,7 +74,7 @@ const VehiclePage = ({ match, history}) => {
                                     <ListGroup.Item>
                                         <Button type='button' 
                                         onClick={addtoCartHandler}
-                                        className btn btn-danger disabled={vehicle.isSold}>Buy Car</Button>
+                                        className btn btn-success variant='success' disabled={vehicle.isSold}>Buy Car</Button>
                                     </ListGroup.Item>
                                 </ListGroup>
 
