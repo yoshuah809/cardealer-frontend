@@ -68,7 +68,7 @@ export const register = (username, first_name, last_name, middle_name,email, pas
 
         const { data } = await axios.post(
             '/api/auth/register/',
-            { 'username': username, 'first_name': first_name, 'middle_name': middle_name, 'email': email, 'password': password },
+            { 'username': username, 'first_name': first_name, 'last_name': last_name, 'middle_name': middle_name, 'email': email, 'password': password },
             config
         )
 
