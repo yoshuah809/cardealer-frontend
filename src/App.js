@@ -6,6 +6,7 @@ import Footer from './Components/Footer/Footer'
 import HomeScreen from './Components/HomeScreen/HomeScreen';
 import VehiclePage from './Components/VehiclePage/VehiclePage';
 import CartPage from './Components/CartPage/CartPage';
+import LoginPage from './Components/LoginPage/LoginPage';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path='/' component={HomeScreen} exact/>
             <Route path='/car:id' component={VehiclePage} />  
             <Route path='/cart:id?' component={CartPage} />  
+            <Route path='/login' component={LoginPage} /> 
        </Container>
        </main>
       <Footer />
