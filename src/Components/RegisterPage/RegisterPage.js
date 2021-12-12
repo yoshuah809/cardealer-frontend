@@ -133,6 +133,7 @@ function RegisterScreen({ location, history }) {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
+
                     Register
                 </Button>
 
