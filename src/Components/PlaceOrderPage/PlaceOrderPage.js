@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../Loader/Message'
 import CheckoutSteps from '../ChekoutSteps/ChekoutSteps'
-//import { createOrder } from '../Actions/OrderActions'
-//import { ORDER_CREATE_RESET } from '../constants/orderConstants'
+import { createOrder } from '../../Actions/OrderActions'
+import { ORDER_CREATE_RESET } from '../../Constants/OrderConstants'
 
 function PlaceOrderScreen({ history }) {
 
     const orderCreate = useSelector(state => state.orderCreate)
-    //const { order, error, success } = orderCreate
+    const { order, error, success } = orderCreate
 
     const dispatch = useDispatch()
 
@@ -27,12 +27,12 @@ function PlaceOrderScreen({ history }) {
         history.push('/payment')
     }
 
-    // useEffect(() => {
-    //     if (success) {
-    //         history.push(`/order/${order._id}`)
-    //         //dispatch({ type: ORDER_CREATE_RESET })
-    //     }
-    // }, [success, history])
+    useEffect(() => {
+        if (success) {
+            history.push(`/order/${order.id}`)
+            dispatch({ type: ORDER_CREATE_RESET })
+        }
+    }, [success, history, dispatch, order.id])
 
     const placeOrder = () => {
         dispatch(createOrder({
@@ -146,7 +146,7 @@ function PlaceOrderScreen({ history }) {
 
 
                             <ListGroup.Item>
-                                {/* {error && <Message variant='danger'>{error}</Message>} */}
+                                {error && <Message variant='danger'>{error}</Message>}
                             </ListGroup.Item>
 
                             <ListGroup.Item>
