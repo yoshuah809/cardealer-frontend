@@ -8,7 +8,7 @@ import VehiclePage from './Components/VehiclePage/VehiclePage';
 import CartPage from './Components/CartPage/CartPage';
 import LoginPage from './Components/LoginPage/LoginPage';
 import RegisterPage from './Components/RegisterPage/RegisterPage';
-
+import ProfilePage from './Components/ProfilePage/ProfilePage';
 
 function App() {
   return (
@@ -22,6 +22,8 @@ function App() {
             <Route path='/cart:id?' component={CartPage} />  
             <Route path='/login' component={LoginPage} /> 
             <Route path='/register' component={RegisterPage} /> 
+            <Route path='/profile' component={ProfilePage} />
+
        </Container>
        </main>
       <Footer />

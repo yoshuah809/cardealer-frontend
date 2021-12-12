@@ -26,12 +26,12 @@ function Header() {
                     <Navbar.Toggle aria-controls ="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav ClassName ="ml-auto">
-                    <LinkContainer to='/Cart'>
+                    <LinkContainer to='/cart'>
                           <Nav.Link><i className="fas fa-shopping-cart"></i>Cart</Nav.Link>
                     </LinkContainer>
 
                     {userInfo ? (
-                                <NavDropdown title={userInfo.name} id='user_name'>
+                                <NavDropdown title={userInfo.user_name} id='user_name'>
                                     <LinkContainer to='/profile'>
                                         <NavDropdown.Item>Profile</NavDropdown.Item>
                                     </LinkContainer>
