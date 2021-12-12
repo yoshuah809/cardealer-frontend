@@ -11,7 +11,6 @@ import { USER_UPDATE_PROFILE_RESET} from '../../Constants/UserConstants'
 function ProfileScreen({ history }) {
 
     const [username, setUserName] = useState('')
-    const [middle_name, setMiddle_name] = useState('')
     const [name, setName] = useState('')
     const [last_name, setLast_name] = useState('')
     const [email, setEmail] = useState('')
