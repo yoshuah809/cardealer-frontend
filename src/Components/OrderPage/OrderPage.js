@@ -45,7 +45,8 @@ function OrderScreen({ match, history }) {
 
             dispatch(getOrderDetails(orderId))
         } else if (!order.isPaid) {
-            <StripeCheckoutButton price={order.totalPrice} onSuccess={successPaymentHandler}/>
+            <StripeCheckoutButton price={order.totalPrice} paymentHandler={successPaymentHandler}/>
+            successPaymentHandler(order.id, 'success')
         }
     }, [dispatch, order, orderId, successPay])
 
@@ -99,7 +100,7 @@ function OrderScreen({ match, history }) {
                                         {order.paymentMethod}
                                     </p>
                                     {order.isPaid ? (
-                                        <Message variant='success'>Paid on {order.paidAt}</Message>
+                                        <Message variant='success'>Paid on {order.paidAt.substring(0, 10)}</Message>
                                     ) : (
                                             <Message variant='warning'>Not Paid</Message>
                                         )}

@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Table } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Loader/Loader'
 import Message from '../Loader/Message'
 import FormContainer from '../FormCointainer/FormContainer'
 import { getUserDetails, updateUserProfile } from '../../Actions/UserAction'
 import { USER_UPDATE_PROFILE_RESET} from '../../Constants/UserConstants'
+import { listMyOrders } from '../../Actions/OrderActions'
+
+
 
 function ProfileScreen({ history }) {
+
+   
 
     const [username, setUserName] = useState('')
     const [name, setName] = useState('')
@@ -29,8 +35,8 @@ function ProfileScreen({ history }) {
     const userUpdateProfile = useSelector(state => state.userUpdateProfile)
     const { success } = userUpdateProfile
 
-    // const orderListMy = useSelector(state => state.orderListMy)
-    // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
+    const orderListMy = useSelector(state => state.orderListMy)
+    const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
 
     useEffect(() => {
@@ -38,17 +44,16 @@ function ProfileScreen({ history }) {
             history.push('/login')
         } else {
             if (!user || !user.name   || success) {
-            //if (!user || !user.first_name || userInfo.id !== user.id) {    
+            //if (!user || !user.name || userInfo.id !== user.id) {    
                 dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
-                //dispatch(listMyOrders())
+                dispatch(listMyOrders())
             } else {
                 setName(user.name)
                 setUserName(user.username)
                 setLast_name(user.last_name)
                 setEmail(user.email)
-                // setFirst_name(user.first_name)
-                // setMiddle_name(user.middle_name)
+                
             }
         }
     }, [dispatch, history, userInfo, user, success])
@@ -119,29 +124,6 @@ function ProfileScreen({ history }) {
                         </Form.Control>
                     </Form.Group>
 
-                    {/* <Form.Group controlId='middle_name'>
-                        <Form.Label>Middle Name</Form.Label>
-                        <Form.Control
-                            
-                            type='middle_name'
-                            placeholder='Enter Middle Name'
-                            value={middle_name}
-                            onChange={(e) => setMiddle_name(e.target.value)}
-                        >
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId='last_name'>
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control
-                            
-                            type='last_name'
-                            placeholder='Enter Last name'
-                            value={last_name}
-                            onChange={(e) => setLast_name(e.target.value)}
-                        >
-                        </Form.Control>
-                    </Form.Group> */}
-
                     <Form.Group controlId='email'>
                         <Form.Label>Email Address</Form.Label>
                         <Form.Control
@@ -186,7 +168,8 @@ function ProfileScreen({ history }) {
             </Col> 
             <Col md={9}>
                 <h2>My Orders</h2>
-                {/* {loadingOrders ? (
+
+                {loadingOrders ? (
                     <Loader />
                 ) : errorOrders ? (
                     <Message variant='danger'>{errorOrders}</Message>
@@ -205,15 +188,16 @@ function ProfileScreen({ history }) {
 
                                 <tbody>
                                     {orders.map(order => (
-                                        <tr key={order._id}>
-                                            <td>{order._id}</td>
+                                        <tr key={order.id}>
+                                            <td>{order.id}</td>
                                             <td>{order.createdAt.substring(0, 10)}</td>
                                             <td>${order.totalPrice}</td>
+                                           
                                             <td>{order.isPaid ? order.paidAt.substring(0, 10) : (
                                                 <i className='fas fa-times' style={{ color: 'red' }}></i>
                                             )}</td>
                                             <td>
-                                                <LinkContainer to={`/order/${order._id}`}>
+                                                <LinkContainer to={`/order/${order.id}`}>
                                                     <Button className='btn-sm'>Details</Button>
                                                 </LinkContainer>
                                             </td>
@@ -221,7 +205,7 @@ function ProfileScreen({ history }) {
                                     ))}
                                 </tbody>
                             </Table>
-                        )} */}
+                        )}
             </Col>
         </Row>
     )
