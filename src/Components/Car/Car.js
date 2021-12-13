@@ -11,18 +11,38 @@ function Car({vehicle}) {
             <Card.Body>
                 <Link to={`/car${vehicle.id}`}>
                     <Card.Title as="div">
-                        <strong>{vehicle.make}</strong>
-                        
-                    </Card.Title>12
+                        Make: <strong>{vehicle.make}</strong>
+                    </Card.Title>
+
                     <Card.Title as="div">
-                       
-                        <strong>{vehicle.model}</strong>
+                        Model: <strong>{vehicle.model}</strong>
+                    </Card.Title>
+
+                    <Card.Title as="div">
+                        Year: <strong>{vehicle.mfr}</strong>
+                    </Card.Title>
+
+                    <Card.Title as="div">
+                        Color: <strong>{vehicle.color}</strong>
+                    </Card.Title>
+
+                    <Card.Title as="div">
+                        Transmission: <strong>{vehicle.transmission}</strong>
+                    </Card.Title>
+
+                    <Card.Title as="div">
+                        Doors: <strong>{vehicle.number_of_doors}</strong>
+                    </Card.Title>
+                    
+                    <Card.Text as="div">
+                        Type: {vehicle.vehicle_type}
+                    </Card.Text> 
+
+                    <Card.Title as="h3" color='red'>
+                        Price: <strong>{vehicle.price}</strong>
                     </Card.Title>
                 </Link>
                    
-                <Card.Text as="h3">
-                    ${vehicle.type}
-                </Card.Text> 
             </Card.Body>
         </Card>
     )

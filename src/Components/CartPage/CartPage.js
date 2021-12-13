@@ -75,8 +75,8 @@ function CartPage({ match, history}) {
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.quantity, 0)}) items</h2>
-                            ${cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)}
+                            <h2>Subtotal ({cartItems.reduce((acc, item) => acc + 1, 0)}) items</h2>
+                            ${cartItems.reduce((acc, item) => acc + 1 * item.price, 0).toFixed(2)}
                         </ListGroup.Item>
                     </ListGroup>
 

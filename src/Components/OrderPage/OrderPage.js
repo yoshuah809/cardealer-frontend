@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-//import { PayPalButton } from 'react-paypal-button-v2'
+import StripeCheckoutButton from '../Stripe-Button/Stripe-Button'
 import Message from '../Loader/Message'
 import Loader from '../Loader/Loader'
-import { getOrderDetails, } from '../../Actions/OrderActions'
+import { getOrderDetails, payOrder } from '../../Actions/OrderActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../../Constants/OrderConstants'
 
 function OrderScreen({ match, history }) {
@@ -13,15 +13,13 @@ function OrderScreen({ match, history }) {
     const dispatch = useDispatch()
 
 
-    const [sdkReady, setSdkReady] = useState(false)
-
     const orderDetails = useSelector(state => state.orderDetails)
     const { order, error, loading } = orderDetails
 
-    //const orderPay = useSelector(state => state.orderPay)
-    //const { loading: loadingPay, success: successPay } = orderPay
+    const orderPay = useSelector(state => state.orderPay)
+    const { loading: loadingPay, success: successPay } = orderPay
 
-    //const orderDeliver = useSelector(state => state.orderDeliver)
+    const orderDeliver = useSelector(state => state.orderDeliver)
     //const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
     const userLogin = useSelector(state => state.userLogin)
@@ -30,44 +28,30 @@ function OrderScreen({ match, history }) {
 
     if (!loading && !error) {
         order.itemsPrice =order.orderItems.reduce((acc, item) => acc + item.priceSold * 1, 0).toFixed(2)
-        console.log(order.itemsPrice)
+       
     }
 
 
-    // const addPayPalScript = () => {
-    //     const script = document.createElement('script')
-    //     script.type = 'text/javascript'
-    //     script.src = 'https://www.paypal.com/sdk/js?client-id=AeDXja18CkwFUkL-HQPySbzZsiTrN52cG13mf9Yz7KiV2vNnGfTDP0wDEN9sGlhZHrbb_USawcJzVDgn'
-    //     script.async = true
-    //     script.onload = () => {
-    //         setSdkReady(true)
-    //     }
-    //     document.body.appendChild(script)
-    // }
-
+    
     useEffect(() => {
 
         if (!userInfo) {
             history.push('/login')
         }
         //if (!order || successPay || order.id !== Number(orderId) || successDeliver) {
-        if (!order || order.id !== Number(orderId) ) {
+        if (!order || order.id !== Number(orderId) || successPay ) {
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
 
             dispatch(getOrderDetails(orderId))
         } else if (!order.isPaid) {
-            if (!window.paypal) {
-                //addPayPalScript()
-            } else {
-                setSdkReady(true)
-            }
+            <StripeCheckoutButton price={order.totalPrice} onSuccess={successPaymentHandler}/>
         }
-    }, [dispatch, order, orderId])
+    }, [dispatch, order, orderId, successPay])
 
 
     const successPaymentHandler = (paymentResult) => {
-       //dispatch(payOrder(orderId, paymentResult))
+       dispatch(payOrder(orderId, paymentResult))
     }
 
     const deliverHandler = () => {
@@ -87,6 +71,8 @@ function OrderScreen({ match, history }) {
                                 <ListGroup.Item>
                                     <h2>Shipping</h2>
                                     <p><strong>Name: </strong> {order.user.name}</p>
+                                    <p><strong>Dealer: </strong> {order.shippingAddress.dealername}</p>
+
                                     <p><strong>Email: </strong><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
                                     <p>
                                         <strong>Shipping: </strong>
@@ -193,16 +179,11 @@ function OrderScreen({ match, history }) {
 
                                     {!order.isPaid && (
                                         <ListGroup.Item>
-                                            {/* {loadingPay && <Loader />} */}
-
-                                            {!sdkReady ? (
-                                                <Loader />
-                                            ) : (
-                                                    <Button
-                                                        amount={order.totalPrice}
-                                                        onSuccess={successPaymentHandler}
-                                                    />
-                                                )}
+                                            {loadingPay && <Loader />}
+                                                
+                                                <StripeCheckoutButton 
+                                                    price={order.totalPrice} 
+                                                    onSuccess={successPaymentHandler}/>
                                         </ListGroup.Item>
                                     )}
                                 </ListGroup>
