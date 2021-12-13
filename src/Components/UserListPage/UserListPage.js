@@ -6,7 +6,7 @@ import Loader from '../Loader/Loader'
 import Message from '../Loader/Message'
 import { listUsers  } from '../../Actions/UserAction'
 
-function UserListScreen({ history }) {
+function UserListPage({ history }) {
 
     const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ function UserListScreen({ history }) {
     const { userInfo } = userLogin
 
     const userDelete = useSelector(state => state.userDelete)
-    const { success: successDelete } = userDelete
+    //const { success: successDelete } = userDelete
 
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function UserListScreen({ history }) {
             history.push('/login')
         }
 
-    }, [dispatch, history, successDelete, userInfo])
+    }, [dispatch, history, userInfo])
 
 
     const deleteHandler = (id) => {
@@ -75,7 +75,7 @@ function UserListScreen({ history }) {
                                                 </Button>
                                             </LinkContainer>
 
-                                            <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(user._id)}>
+                                            <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(user.id)}>
                                                 <i className='fas fa-trash'></i>
                                             </Button>
                                         </td>
@@ -88,4 +88,4 @@ function UserListScreen({ history }) {
     )
 }
 
-export default UserListScreen
+export default UserListPage
