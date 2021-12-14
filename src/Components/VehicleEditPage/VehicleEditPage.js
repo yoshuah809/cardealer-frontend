@@ -6,8 +6,8 @@ import Message from '../Loader/Message'
 import Loader from '../Loader/Loader'
 import FormContainer from '../FormCointainer/FormContainer'
 
-import { listVehicleDetails } from '../../Actions/VehicleActions'
-//import { USER_UPDATE_RESET } from '../../Constants/UserConstants'
+import { listVehicleDetails, updateProduct } from '../../Actions/VehicleActions'
+import { VEHICLE_UPDATE_RESET } from '../../Constants/VehicleConstants'
 
 function UserVehicletPage({ match, history }) {
 
@@ -37,37 +37,49 @@ function UserVehicletPage({ match, history }) {
     const { error, loading, vehicle } = vehicleDetails
 
    
+    const vehicleUpdate = useSelector(state => state.vehicleUpdate)
+    const { error: errorUpdate, loading:loadingUpdate, success: successUpdate } = vehicleUpdate
 
     useEffect(() => {
 
-            if (!vehicle.make || vehicle.id !== Number(vehicleId)) {
-                dispatch(listVehicleDetails(vehicleId))
-            } else {
-                setMake(vehicle.make)
-                setModel(vehicle.model)
-                setVIN(vehicle.VIN)
-                setColor(vehicle.color)
-                setDoors(vehicle.number_of_doors)
-                setMillage(vehicle.millage)
-                setFeatures(vehicle.features)
-                setTransmission(vehicle.transmission)
-                setType(vehicle.vehicle_type)
-                setImage(vehicle.main_image)
-                setPurchase_date(vehicle.purchased_date)
-                setSold(vehicle.date_sold)
-                setRowseat(vehicle.rowseat)
-                setPrice(vehicle.price)
-                setIsSold(vehicle.isSold)
-                setMfr(vehicle.mfr)
-                setFuel(vehicle.fuel_type)
+            if(successUpdate) {
+                dispatch({type: VEHICLE_UPDATE_RESET})
+                history.push('/admin/vehiclelist')
+            } else{
+
+                if (!vehicle.make || vehicle.id !== Number(vehicleId)) {
+                    dispatch(listVehicleDetails(vehicleId))
+                } else {
+                    setMake(vehicle.make)
+                    setModel(vehicle.model)
+                    setVIN(vehicle.VIN)
+                    setColor(vehicle.color)
+                    setDoors(vehicle.number_of_doors)
+                    setMillage(vehicle.millage)
+                    setFeatures(vehicle.features)
+                    setTransmission(vehicle.transmission)
+                    setType(vehicle.vehicle_type)
+                    setImage(vehicle.main_image)
+                    setPurchase_date(vehicle.purchased_date)
+                    setSold(vehicle.date_sold)
+                    setRowseat(vehicle.rowseat)
+                    setPrice(vehicle.price)
+                    setIsSold(vehicle.isSold)
+                    setMfr(vehicle.mfr)
+                    setFuel(vehicle.fuel_type)
+                }
             }
         
 
-    }, [vehicle, vehicleId, history, dispatch,])
+    }, [vehicle, vehicleId, history, dispatch, successUpdate])
 
     const submitHandler = (e) => {
         e.preventDefault()
-         //update product
+         dispatch(updateProduct({
+            id:vehicleId, make, model, VIN, color, number_of_doors,
+            millage, features, transmission, vehicle_type, main_image,
+            purchased_date, date_sold, rowseat, price, isSold, mfr, fuel_type
+         }))
     }
 
     return (
@@ -78,8 +90,8 @@ function UserVehicletPage({ match, history }) {
 
             <FormContainer>
                 <h1>Edit Vehicle</h1>
-                {/* {loadingUpdate && <Loader />}
-                {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>} */}
+                {loadingUpdate && <Loader />}
+                {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
 
                 {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>
                     : (

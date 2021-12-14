@@ -14,6 +14,11 @@ import  { VEHICLE_LIST_REQUEST,
     VEHICLE_CREATE_REQUEST,
     VEHICLE_CREATE_SUCCESS,
     VEHICLE_CREATE_FAIL,
+
+    VEHICLE_UPDATE_REQUEST,
+    VEHICLE_UPDATE_SUCCESS,
+    VEHICLE_UPDATE_FAIL,
+
 } from '../Constants/VehicleConstants'
 
 import axios from 'axios'
@@ -130,6 +135,50 @@ export const createVehicle = () => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: VEHICLE_CREATE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+export const updateProduct = (vehicle) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: VEHICLE_UPDATE_REQUEST
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.put(
+            `/api/vehicles/update/${vehicle.id}/`,
+            vehicle,
+            config
+        )
+        dispatch({
+            type: VEHICLE_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+
+        dispatch({
+            type: VEHICLE_DETAILS_SUCCESS,
+            payload: data
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: VEHICLE_UPDATE_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message,
