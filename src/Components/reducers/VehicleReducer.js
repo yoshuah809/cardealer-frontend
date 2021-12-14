@@ -8,6 +8,11 @@ import  { VEHICLE_LIST_REQUEST,
           VEHICLE_DELETE_REQUEST,
           VEHICLE_DELETE_SUCCESS,
           VEHICLE_DELETE_FAIL,
+
+          VEHICLE_CREATE_REQUEST,
+          VEHICLE_CREATE_SUCCESS,
+          VEHICLE_CREATE_FAIL,
+          VEHICLE_CREATE_RESET,
         } from './../../Constants/VehicleConstants'
 
 export const vehicleListReducer = (state ={ vehicles: [] }, action) => {
@@ -52,6 +57,25 @@ export const vehicleDeleteReducer = (state = {}, action) => {
 
         case VEHICLE_DELETE_FAIL:
             return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const vehicleCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case VEHICLE_CREATE_REQUEST:
+            return { loading: true }
+
+        case VEHICLE_CREATE_SUCCESS:
+            return { loading: false, success: true, vehicle: action.payload }
+
+        case VEHICLE_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+
+        case VEHICLE_CREATE_RESET:
+            return {}
 
         default:
             return state

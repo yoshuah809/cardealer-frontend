@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { vehicleListReducer, vehicleDetailsReducer,vehicleDeleteReducer } from '../Components/reducers/VehicleReducer'
+import { vehicleListReducer, vehicleDetailsReducer,vehicleDeleteReducer, vehicleCreateReducer } from '../Components/reducers/VehicleReducer'
 import { CartReducer } from '../Components/reducers/CartReducer'
 import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer, userDeleteReducer, userUpdateReducer } from '../Components/reducers/UserReducer'
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderListMyReducer } from '../Components/reducers/OrderReducers'
@@ -22,6 +22,7 @@ const reducer = combineReducers({
     orderDetails:orderDetailsReducer,
     orderPay :orderPayReducer,
     orderListMy: orderListMyReducer,
+    vehicleCreate: vehicleCreateReducer,
 })
 
 

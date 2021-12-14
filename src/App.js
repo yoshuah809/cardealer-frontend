@@ -16,6 +16,7 @@ import OrderPage from './Components/OrderPage/OrderPage'
 import UserListPage from './Components/UserListPage/UserListPage'
 import UserEditPage from './Components/UserEditPage/UserEditPage'
 import VehicleListPage from './Components/VehicleListPage/VehicleListPage'
+import VehicleEditPage from './Components/VehicleEditPage/VehicleEditPage'
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path='/admin/user/:id/edit' component={UserEditPage} />
 
             <Route path='/admin/vehiclelist' component={VehicleListPage} />
+            <Route path='/admin/vehicle/:id/edit' component={VehicleEditPage} />
 
        </Container>
        </main>
