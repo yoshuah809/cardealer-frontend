@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../Loader/Loader'
 import Message from '../Loader/Message'
 //import Paginate from '../components/Paginate'
-import { listVehicles  } from '../../Actions/VehicleActions'
+import { listVehicles, deleteVehicle  } from '../../Actions/VehicleActions'
 //deletevehicle, createvehicle
 import { VEHICLE_CREATE_RESET } from '../../Constants/VehicleConstants'
 
@@ -16,8 +16,8 @@ function VehicleListPage({ history, match }) {
     const listVehicles = useSelector(state => state.vehicleList)
     const { loading, error, vehicles, pages, page } = listVehicles
 
-    // const vehicleDelete = useSelector(state => state.vehicleDelete)
-    // const { loading: loadingDelete, error: errorDelete, success: successDelete } = vehicleDelete
+    const vehicleDelete = useSelector(state => state.vehicleDelete)
+    const { loading: loadingDelete, error: errorDelete, success: successDelete } = vehicleDelete
 
     // const vehicleCreate = useSelector(state => state.vehicleCreate)
     // const { loading: loadingCreate, error: errorCreate, success: successCreate, vehicle: createdvehicle } = vehicleCreate
@@ -27,26 +27,27 @@ function VehicleListPage({ history, match }) {
     const { userInfo } = userLogin
 
     let keyword = history.location.search
-    // useEffect(() => {
-    //     dispatch({ type: VEHICLE_CREATE_RESET })
+    useEffect(() => {
+        dispatch({ type: VEHICLE_CREATE_RESET })
 
-    //     if (!userInfo.isAdmin) {
-    //         history.push('/login')
-    //     }
+        if (!userInfo.isAdmin) {
+            history.push('/login')
+        }
 
-    //     if (successCreate) {
-    //         history.push(`/admin/vehicle/${createdvehicle.id}/edit`)
-    //     } else {
-    //         dispatch(listvehicles(keyword))
-    //     }
+        // if (successCreate) {
+        //     history.push(`/admin/vehicle/${createdvehicle.id}/edit`)
+        // } else {
+        //     dispatch(listvehicles(keyword))
+        // }
 
     // }, [dispatch, history, userInfo, successDelete, successCreate, createdvehicle, keyword])
+    }, [dispatch, history, userInfo, successDelete, keyword])
 
 
     const deleteHandler = (id) => {
 
         if (window.confirm('Are you sure you want to delete this Vehicle?')) {
-            //dispatch(deleteVehicle(id))
+            dispatch(deleteVehicle(id))
         }
     }
 
@@ -68,10 +69,10 @@ function VehicleListPage({ history, match }) {
                 </Col>
             </Row>
 
-            {/* {loadingDelete && <Loader />}
             {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+            {loadingDelete && <Loader />}
 
-
+            {/* 
             {loadingCreate && <Loader />}
             {errorCreate && <Message variant='danger'>{errorCreate}</Message>} */}
 
