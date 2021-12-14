@@ -1,25 +1,27 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { vehicleListReducer, vehicleDetailsReducer } from '../Components/reducers/VehicleReducer'
+import { vehicleListReducer, vehicleDetailsReducer,vehicleDeleteReducer } from '../Components/reducers/VehicleReducer'
 import { CartReducer } from '../Components/reducers/CartReducer'
-import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer, userDeleteReducer } from '../Components/reducers/UserReducer'
+import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer, userDeleteReducer, userUpdateReducer } from '../Components/reducers/UserReducer'
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderListMyReducer } from '../Components/reducers/OrderReducers'
 
 const reducer = combineReducers({
     vehicleList: vehicleListReducer,
     vehicleDetails: vehicleDetailsReducer,
+    vehicleDelete: vehicleDeleteReducer,
     cart: CartReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userList: userListReducer,
     userDetails: userDetailsReducer,
     userUpdateProfile :userUpdateProfileReducer,
+    userDelete: userDeleteReducer,
+    userUpdate :userUpdateReducer,
     orderCreate: orderCreateReducer,
     orderDetails:orderDetailsReducer,
     orderPay :orderPayReducer,
     orderListMy: orderListMyReducer,
-    userDelete: userDeleteReducer,
 })
 
 

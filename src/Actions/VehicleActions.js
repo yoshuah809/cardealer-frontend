@@ -5,7 +5,12 @@ import  { VEHICLE_LIST_REQUEST,
     VEHICLE_LIST_FAIL,
     VEHICLE_DETAILS_REQUEST,
     VEHICLE_DETAILS_SUCCESS,
-    VEHICLE_DETAILS_FAIL } from '../Constants/VehicleConstants'
+    VEHICLE_DETAILS_FAIL, 
+
+    VEHICLE_DELETE_REQUEST,
+    VEHICLE_DELETE_SUCCESS,
+    VEHICLE_DELETE_FAIL,
+} from '../Constants/VehicleConstants'
 
 import axios from 'axios'
 
@@ -51,3 +56,40 @@ export const listVehicleDetails = (id) => async (dispatch) => {
     }
  }
 
+
+ export const deleteVehicle = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: VEHICLE_DELETE_REQUEST
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.delete(
+            `/api/vehicles/delete/${id}/`,
+            config
+        )
+
+        dispatch({
+            type: VEHICLE_DELETE_SUCCESS,
+        })
+
+
+    } catch (error) {
+        dispatch({
+            type: VEHICLE_DELETE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
