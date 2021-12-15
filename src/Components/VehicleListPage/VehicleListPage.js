@@ -7,6 +7,7 @@ import Message from '../Loader/Message'
 //import Paginate from '../components/Paginate'
 import { listVehicles, deleteVehicle, createVehicle  } from '../../Actions/VehicleActions'
 import { VEHICLE_CREATE_RESET } from '../../Constants/VehicleConstants'
+import moment from "moment";
 
 function VehicleListPage({ history, match }) {
 
@@ -19,13 +20,14 @@ function VehicleListPage({ history, match }) {
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = vehicleDelete
 
     const vehicleCreate = useSelector(state => state.vehicleCreate)
-    const { loading: loadingCreate, error: errorCreate, success: successCreate, vehicle: createdvehicle } = vehicleCreate
+    const { loading: loadingCreate, error: errorCreate, success: successCreate, vehicle: createdVehicle } = vehicleCreate
 
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
     let keyword = history.location.search
+
     useEffect(() => {
         dispatch({ type: VEHICLE_CREATE_RESET })
 
@@ -34,13 +36,12 @@ function VehicleListPage({ history, match }) {
         }
 
         if (successCreate) {
-            history.push(`/admin/vehicle/${createdvehicle.id}/edit`)
+            history.push(`/admin/vehicle/${createdVehicle.id}/edit`)
         } else {
             dispatch(listVehicles(keyword))
         }
 
-    }, [dispatch, history, userInfo, successDelete, successCreate, createdvehicle, keyword])
-    //}, [dispatch, history, userInfo, successDelete, keyword])
+    }, [dispatch, history, userInfo, successDelete, successCreate, createdVehicle, keyword])
 
 
     const deleteHandler = (id) => {
@@ -81,7 +82,9 @@ function VehicleListPage({ history, match }) {
                     ? (<Message variant='danger'>{error}</Message>)
                     : (
                         <div>
-                            <Table striped bordered hover responsive className='table-sm'>
+                            {/* <Table striped bordered hover responsive className='table-sm'> */}
+                            <table className="table stripped hover responsible table-dark">
+
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -111,7 +114,7 @@ function VehicleListPage({ history, match }) {
                                             <td>{vehicle.VIN}</td>
                                             <td>{vehicle.number_of_doors}</td>
                                             <td>{vehicle.fuel_type}</td>
-                                            <td>{vehicle.purchased_date}</td>
+                                            <td>{moment(vehicle.purchased_date).format("MM/DD/YYYY")}</td>
                                             <td>{vehicle.date_sold}</td>
                                             <td>{vehicle.transmission}</td>
                                             <td>{vehicle.price}</td>
@@ -130,7 +133,7 @@ function VehicleListPage({ history, match }) {
                                         </tr>
                                     ))}
                                 </tbody>
-                            </Table>
+                            </table>
                             {/* <Paginate pages={pages} page={page} isAdmin={true} /> */}
                         </div>
                     )}

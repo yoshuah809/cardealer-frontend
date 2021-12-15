@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Car({vehicle}) {
     return (
-        <Card className="my-3 p-3 rounded">
+        <Card className="my-3 p-3 rounded" bg="success" >
             <Link to={`/car${vehicle.id}`}>
                 <Card.Img src={vehicle.main_image} />
             </Link>

@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../Loader/Message'
 import Loader from '../Loader/Loader'
 import FormContainer from '../FormCointainer/FormContainer'
-
 import { listVehicleDetails, updateProduct } from '../../Actions/VehicleActions'
 import { VEHICLE_UPDATE_RESET } from '../../Constants/VehicleConstants'
 
-function UserVehicletPage({ match, history }) {
+import axios from 'axios'
+
+function VehicletEditPage({ match, history }) {
 
     const vehicleId = match.params.id
 
@@ -30,6 +31,7 @@ function UserVehicletPage({ match, history }) {
     const [isSold, setIsSold] = useState()
     const [rowseat, setRowseat] = useState()
     const [price, setPrice] = useState(0)
+    const [uploading, setUploading] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -80,6 +82,34 @@ function UserVehicletPage({ match, history }) {
             millage, features, transmission, vehicle_type, main_image,
             purchased_date, date_sold, rowseat, price, isSold, mfr, fuel_type
          }))
+    }
+
+    const uploadFileHandler = async (e) => {
+        
+        console.log('Uploading')
+        const file = e.target.files[0]
+        const formData = new FormData()
+
+        formData.append('main_image', file)
+        formData.append('vehicleid', vehicleId)
+
+        setUploading(true)
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+
+            const { data } = await axios.post('/api/vehicles/upload/', formData, config)
+            setImage(data)
+            setUploading(false)
+
+        } catch (error) {
+            alert.Message('Failed')
+            setUploading(false)
+        }
     }
 
     return (
@@ -228,6 +258,18 @@ function UserVehicletPage({ match, history }) {
                                     onChange={(e) => setImage(e.target.value)}
                                 >
                                 </Form.Control>
+                              
+                                <Form.Group  class="form-group">
+                                    <label for="formFile" class="form-label mt-4">Default file input example</label>
+                                    <input 
+                                        placeholder='Upload image'
+                                        onChange={uploadFileHandler} 
+                                        class="form-control" type="file" 
+                                        id="formFile"/>
+                                </Form.Group>
+ 
+                               
+                                {uploading && <Loader />}
                             </Form.Group>
 
                             <Form.Group controlId='purchase_date'>
@@ -298,6 +340,6 @@ function UserVehicletPage({ match, history }) {
     )
 }
 
-export default UserVehicletPage
+export default VehicletEditPage
 
 

@@ -17,6 +17,9 @@ import UserListPage from './Components/UserListPage/UserListPage'
 import UserEditPage from './Components/UserEditPage/UserEditPage'
 import VehicleListPage from './Components/VehicleListPage/VehicleListPage'
 import VehicleEditPage from './Components/VehicleEditPage/VehicleEditPage'
+import OrderListPage from './Components/OrderListPage/OrderListPage'
+
+
 
 function App() {
   return (
@@ -41,6 +44,8 @@ function App() {
 
             <Route path='/admin/vehiclelist' component={VehicleListPage} />
             <Route path='/admin/vehicle/:id/edit' component={VehicleEditPage} />
+
+            <Route path='/admin/orderlist' component={OrderListPage} />
 
        </Container>
        </main>
