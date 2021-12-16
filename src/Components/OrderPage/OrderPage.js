@@ -7,6 +7,7 @@ import Message from '../Loader/Message'
 import Loader from '../Loader/Loader'
 import { getOrderDetails, payOrder } from '../../Actions/OrderActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../../Constants/OrderConstants'
+import moment from "moment";
 
 function OrderScreen({ match, history }) {
     const orderId = match.params.id
@@ -32,6 +33,9 @@ function OrderScreen({ match, history }) {
     }
 
 
+    const successPaymentHandler = (paymentResult) => {
+      dispatch(payOrder(orderId, paymentResult))
+    }
     
     useEffect(() => {
 
@@ -39,21 +43,18 @@ function OrderScreen({ match, history }) {
             history.push('/login')
         }
         //if (!order || successPay || order.id !== Number(orderId) || successDeliver) {
-        if (!order || order.id !== Number(orderId) || successPay ) {
+        if (!order || order.id !== Number(orderId) || successPay) {
             dispatch({ type: ORDER_PAY_RESET })
-            dispatch({ type: ORDER_DELIVER_RESET })
+            //dispatch({ type: ORDER_DELIVER_RESET })
 
             dispatch(getOrderDetails(orderId))
         } else if (!order.isPaid) {
-            <StripeCheckoutButton price={order.totalPrice} paymentHandler={successPaymentHandler}/>
-            successPaymentHandler(order.id, 'success')
+            // <StripeCheckoutButton price={order.totalPrice} paymentHandler={successPaymentHandler}/>
+            //successPaymentHandler(order.id, 'success' )
         }
-    }, [dispatch, order, orderId, successPay])
+    }, [dispatch, order, orderId, history, userInfo, successPay])
 
 
-    const successPaymentHandler = (paymentResult) => {
-       dispatch(payOrder(orderId, paymentResult))
-    }
 
     const deliverHandler = () => {
         //dispatch(deliverOrder(order))
@@ -100,7 +101,7 @@ function OrderScreen({ match, history }) {
                                         {order.paymentMethod}
                                     </p>
                                     {order.isPaid ? (
-                                        <Message variant='success'>Paid on {order.paidAt}</Message>
+                                        <Message variant='success'>Paid on {moment(order.paidAt).format('MM/DD/YYYY')}</Message>
                                     ) : (
                                             <Message variant='warning'>Not Paid</Message>
                                         )}
@@ -179,13 +180,13 @@ function OrderScreen({ match, history }) {
 
 
                                     {!order.isPaid && (
-                                        <ListGroup.Item>
-                                            {loadingPay && <Loader />}
+                                        <div>
+                                            {/* {loadingPay && <Loader />} */}
                                                 
                                                 <StripeCheckoutButton 
                                                     price={order.totalPrice} 
-                                                    onSuccess={successPaymentHandler}/>
-                                        </ListGroup.Item>
+                                                    paymentHandler={successPaymentHandler}/>
+                                        </div>
                                     )}
                                 </ListGroup>
                                 {/* {loadingDeliver && <Loader />} */}

@@ -3,13 +3,14 @@ import StripeCheckout from 'react-stripe-checkout'
 
 
 
-const StripeCheckoutButton =({ price })=> {
-    const priceForStripe = price *100;
+const StripeCheckoutButton =(props)=> {
+    const priceForStripe = props.price *100;
     const publishableKey='pk_test_51K6EksCK0qDFjEEOHzlwjCtHETyEKrhyeGleORCzr6gSKBjEDwflW51G5zNIi4oEjMCH3C1CuKeY2wJFG6dltjBW00tdbhhKYq';
     
     const onToken =(token)=>{
         console.log(token)
-        alert('Pament Successful')
+        alert('Payment Successful')
+        props.paymentHandler()
 
     }
 
@@ -19,9 +20,10 @@ const StripeCheckoutButton =({ price })=> {
             name='Downtown AutoPlex LLC'
             billingAddress
             shippingAddress
-            description ={`Your Total is: $${ price }`}
+            description ={`Your Total is: $${ props.price }`}
             amount={priceForStripe}
-            panelLabel='Pay Now!'           
+            panelLabel='Pay Now!'  
+            data-image='https://stripe.com/img/documentation/checkout/marketplace.png'         
 
             token={onToken}
             stripeKey={publishableKey}

@@ -35,7 +35,8 @@ const VehiclePage = ({ match, history}) => {
 
                         <Row>
                             <Col md={6}>
-                            <Image src ={vehicle.main_image } alt={vehicle.make} fluid />
+                            <Image src ={vehicle.main_image} alt={vehicle.make} fluid />
+                            {console.log(vehicle.main_image)}
                             </Col>
                             <Col md={3}>
                                 <ListGroup variant="Flush">

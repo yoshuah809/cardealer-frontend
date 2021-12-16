@@ -11,7 +11,7 @@ function RegisterScreen({ location, history }) {
 
     const [username, setUserName] = useState('')
     const [middle_name, setMiddle_name] = useState('')
-    const [first_name, setFirst_name] = useState('')
+    const [name, setFirst_name] = useState('')
     const [last_name, setLast_name] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -37,7 +37,7 @@ function RegisterScreen({ location, history }) {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(register(username, first_name, last_name, middle_name, email, password))
+            dispatch(register(username, name, last_name, middle_name, email, password))
         }
 
     }
@@ -62,13 +62,13 @@ function RegisterScreen({ location, history }) {
                     >
                     </Form.Control>
                 </Form.Group>
-                <Form.Group controlId='first_name'>
+                <Form.Group controlId='name'>
                     <Form.Label>First Name</Form.Label>
                     <Form.Control
                         required
-                        type='first_name'
+                        type='name'
                         placeholder='Enter First Name'
-                        value={first_name}
+                        value={name}
                         onChange={(e) => setFirst_name(e.target.value)}
                     >
                     </Form.Control>
@@ -132,10 +132,10 @@ function RegisterScreen({ location, history }) {
                     </Form.Control>
                 </Form.Group>
 
-                <Button type='submit' variant='primary'>
+                <button type='submit' variant='primary'>
 
                     Register
-                </Button>
+                </button>
 
             </Form>
 

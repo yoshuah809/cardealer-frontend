@@ -9,7 +9,7 @@ import FormContainer from '../FormCointainer/FormContainer'
 import { getUserDetails, updateUserProfile } from '../../Actions/UserAction'
 import { USER_UPDATE_PROFILE_RESET} from '../../Constants/UserConstants'
 import { listMyOrders } from '../../Actions/OrderActions'
-
+import moment from "moment";
 
 
 function ProfileScreen({ history }) {
@@ -189,10 +189,10 @@ function ProfileScreen({ history }) {
                                     {orders.map(order => (
                                         <tr key={order.id}>
                                             <td>{order.id}</td>
-                                            <td>{order.createdAt.substring(0, 10)}</td>
+                                            <td>{moment(order.createdAt).format('MM/DD/YYYY')}</td>
                                             <td>${order.totalPrice}</td>
                                            
-                                            <td>{order.isPaid ? order.paidAt.substring(0, 10) : (
+                                            <td>{order.isPaid ? moment(order.paidAt).format('MM/DD/YYYY') : (
                                                 <i className='fas fa-times' style={{ color: 'red' }}></i>
                                             )}</td>
                                             <td>
