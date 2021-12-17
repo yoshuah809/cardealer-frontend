@@ -18,7 +18,10 @@ import UserEditPage from './Components/UserEditPage/UserEditPage'
 import VehicleListPage from './Components/VehicleListPage/VehicleListPage'
 import VehicleEditPage from './Components/VehicleEditPage/VehicleEditPage'
 import OrderListPage from './Components/OrderListPage/OrderListPage'
+import ContactMeForm from './Components/ContactMeForm/ContactMeForm';
+import AffiliateServices from './Components/ContactMeForm/AffiliateServices';
 
+import { useState } from 'react'
 
 
 function App() {
@@ -46,6 +49,9 @@ function App() {
             <Route path='/admin/vehicle/:id/edit' component={VehicleEditPage} />
 
             <Route path='/admin/orderlist' component={OrderListPage} />
+
+            <Route path='/contactme' component={ContactMeForm} />
+            <Route path='/affiliate' component={AffiliateServices} />
 
        </Container>
        </main>

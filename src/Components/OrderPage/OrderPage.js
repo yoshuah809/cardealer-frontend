@@ -21,7 +21,7 @@ function OrderScreen({ match, history }) {
     const { loading: loadingPay, success: successPay } = orderPay
 
     const orderDeliver = useSelector(state => state.orderDeliver)
-    //const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+  
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -42,22 +42,21 @@ function OrderScreen({ match, history }) {
         if (!userInfo) {
             history.push('/login')
         }
-        //if (!order || successPay || order.id !== Number(orderId) || successDeliver) {
+      
         if (!order || order.id !== Number(orderId) || successPay) {
             dispatch({ type: ORDER_PAY_RESET })
-            //dispatch({ type: ORDER_DELIVER_RESET })
+           
 
             dispatch(getOrderDetails(orderId))
         } else if (!order.isPaid) {
-            // <StripeCheckoutButton price={order.totalPrice} paymentHandler={successPaymentHandler}/>
-            //successPaymentHandler(order.id, 'success' )
+          
         }
     }, [dispatch, order, orderId, history, userInfo, successPay])
 
 
 
     const deliverHandler = () => {
-        //dispatch(deliverOrder(order))
+        // Not needed for now
     }
 
     return loading ? (
@@ -179,18 +178,18 @@ function OrderScreen({ match, history }) {
                                     </ListGroup.Item>
 
 
-                                    {!order.isPaid && (
+                                    {!order.isPaid & order.totalPrice <= 10000 ? (
                                         <div>
-                                            {/* {loadingPay && <Loader />} */}
+                                            {loadingPay && <Loader />}
                                                 
                                                 <StripeCheckoutButton 
                                                     price={order.totalPrice} 
                                                     paymentHandler={successPaymentHandler}/>
                                         </div>
-                                    )}
+                                    ) : <p><strong>......Please Contact Administration for Payment</strong></p> } 
                                 </ListGroup>
-                                {/* {loadingDeliver && <Loader />} */}
-                                {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                                
+                                {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered &&  order.totalPrice <= 10000 &&(
                                     <ListGroup.Item>
                                         <Button
                                             type='button'

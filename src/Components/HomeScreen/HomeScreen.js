@@ -5,11 +5,12 @@ import Car from '../Car/Car'
 import Loader from '../Loader/Loader'
 import Message from '../Loader/Message'
 import { listVehicles } from '../../Actions/VehicleActions'
+import { Link } from 'react-router-dom'
 
 
 
 function HomeScreen ({ history }) {
-   
+
     const dispatch = useDispatch()
     const vehicleList = useSelector(state => state.vehicleList)
     const { error, loading, vehicles } = vehicleList
@@ -20,8 +21,11 @@ function HomeScreen ({ history }) {
         dispatch(listVehicles(keyword))        
     }, [dispatch, keyword])
 
+
+
     return (
         <div>
+            <Link to={'/affiliate'}><strong align='right' >Click Here for Afiliate Services</strong></Link>
             <h1>Laterst Cars</h1>
 
             {

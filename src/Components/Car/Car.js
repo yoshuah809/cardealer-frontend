@@ -42,6 +42,7 @@ function Car({vehicle}) {
                         Price: <strong>{vehicle.price}</strong>
                     </Card.Title>
                 </Link>
+                <Link to='/contactme' font-color='red'><stront>Please Contact Me</stront></Link>
                    
             </Card.Body>
         </Card>
